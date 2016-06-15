@@ -1,2 +1,2 @@
-# triangle
+# Triangle
 A simple chat app
