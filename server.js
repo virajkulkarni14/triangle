@@ -1,20 +1,28 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+var express      = require('express');
+var path         = require('path');
+var favicon      = require('serve-favicon');
+var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var bodyParser   = require('body-parser');
+var mongoose     = require('mongoose');
+var Promise      = require('bluebird');
+
+var port = process.env.PORT || 3000;
+
 mongoose.connect('mongodb://localhost/triangle');
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to Triangle DB');
 });
 
+var User = require('./models/User');
+var Message = require('./models/Message');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes   = require('./routes/index');
+var users    = require('./routes/users');
+var messages = require('./routes/messages');
 
 var app = express();
 
@@ -32,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/messages', messages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -62,6 +71,10 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.listen(port, function() {
+  console.log('Running on PORT: ' + port);
 });
 
 

@@ -3,11 +3,11 @@ extends layout
 block content
   h1 Triangle
   p Chat with interesting people in your city.
-  form(name='signin', method='post', action='/signin')
+  form(name='signup', method='post', action='/signup')
     div
       input#inputEmail(type='email', placeholder = 'Email', name = 'email', required)
     div
       input#inputPassword(type='password', placeholder = 'Password', name = 'pwd', required)
     div
-      input(type='submit', class="btnSubmit", alt='SIGN IN', value='SIGN IN')
+      input(type='submit', class="btnSubmit", alt='SIGN UP', value='SIGN UP')
 
